@@ -9,7 +9,10 @@ RUN apt-get update && \
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
 
+ENV PATH="/app/binaries:${PATH}"
+
 WORKDIR /app
+
 COPY package.json /app/
 COPY bun.lock /app/
 

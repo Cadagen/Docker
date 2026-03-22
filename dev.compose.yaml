@@ -13,6 +13,8 @@ services:
       - ../../.env
     volumes:
       - ../server:/app
+      - ../microservices/fs/build/cadagen-fs:/app/binaries/cadagen-fs
+      - ~/:/usrhome
     restart: unless-stopped
     ports:
       - "9806:3000"

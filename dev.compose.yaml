@@ -1,0 +1,37 @@
+services:
+  backend:
+    tty: true
+    container_name: cadagen-backend
+    build:
+      context: ../server
+      dockerfile: ../docker/images/server.dockerfile
+    working_dir: /app
+    command: bun run start:dev
+    networks:
+      - cadagen
+    env_file:
+      - ../../.env
+    volumes:
+      - ../server:/app
+    restart: unless-stopped
+    ports:
+      - "9806:3000"
+
+  timescale:
+    tty: true
+    container_name: cadagen-timescale
+    image: timescale/timescaledb-ha:pg17
+    networks:
+      - cadagen
+    volumes:
+      - "cadagen-timescale:/home/postgres/pgdata/data"
+    env_file:
+      - ../../.env
+    restart: unless-stopped
+
+networks:
+  cadagen:
+    name: cadagen
+
+volumes:
+  cadagen-timescale:
